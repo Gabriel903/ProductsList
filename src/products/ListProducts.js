@@ -36,8 +36,10 @@ import Product from './Product'
         }      
       `
 
-    const ListProducts = () => {
+
+    const ListProducts = (props) => {
         const { data, error, fetchMore } = useQuery(PRODUCTS)
+        console.log("aaa",props)
         if (error) return <p>ERROR</p>
         return (
             <Fragment>
