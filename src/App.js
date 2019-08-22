@@ -30,13 +30,12 @@ const App = () => {
       <h1>CRUD App with Hooks</h1>
       <div className="flex-row">
         <div className="flex-large">
+        <h2>Lista de Produtos</h2>
         <ListProducts />
-          <h2>Add user</h2>
-          <AddUserForm addUser={addUser} />
+          {/* <AddUserForm addUser={addUser} /> */}
         </div>
         <div className="flex-large">
-          <h2>View users</h2>
-          <UserTable users={users} deleteUser={deleteUser} />
+          {/* <UserTable users={users} deleteUser={deleteUser} /> */}
         </div>
       </div>
     </div>
