@@ -39,9 +39,13 @@ const PRODUCTS = gql`
 const ListProducts = (props) => {
   const { data, error, fetchMore } = useQuery(PRODUCTS)
   const [productInfo, handleProductInfo] = useState(false)
+  const [idProduct, actualIdProduct] = useState('')
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     productInfo === false ? handleProductInfo(true) : handleProductInfo(false)
+    let id = idProduct
+    id = e.target.id
+    actualIdProduct(id)
   }
 
   const handleClose = () => {
@@ -55,7 +59,7 @@ const ListProducts = (props) => {
         <tbody>
           {data.skus && data.skus.edges.map((product, index) => (
             <tr key={index} >
-              <td onClick={handleClick}>{product.node.name}</td>
+              <td onClick={handleClick} id={product.node.id}>{product.node.name}</td>
               <td>
                 <button className="button muted-button">Edit</button>
                 <button className="button muted-button">Delete</button>
@@ -64,7 +68,7 @@ const ListProducts = (props) => {
           ))}
         </tbody>
       </table>
-      {productInfo && <ProductInfo productInfo={productInfo} handleClose={handleClose} />}
+      {productInfo && <ProductInfo productInfo={productInfo} idProduct={idProduct} handleClose={handleClose} />}
       <button onClick={() => {
         fetchMore({
           variables: {

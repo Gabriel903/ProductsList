@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
@@ -94,8 +94,11 @@ export default function SimpleModal(props) {
 		handleProducts(arr)
 	}
 
-	return (
+	const handleSave = (e) => {
+		console.log("VOU SALVAR")
+	}
 
+	return (
 		<div>
 			<Modal
 				aria-labelledby="simple-modal-title"
@@ -112,42 +115,47 @@ export default function SimpleModal(props) {
 						</tr>
 					</thead>
 					<tbody>
-						{products.map((product, index) => (
-							<tr key={index} >
-								<td>
-									<input type="text"
-										name="productName"
-										value={product.node.name}
-										id={index}
-										onChange={handleName}
-									>
-									</input>
-								</td>
-								<td>
-									<input
-										type="text"
-										name="promotionalPrice"
-										value={product.node.promotionalPrice}
-										id={index}
-										onChange={handlePromotionalPrice}
-									>
-									</input>
-								</td>
-								<td>
-									<input
-										type="text"
-										name="productName"
-										value={product.node.salePrice}
-										id={index}
-										onChange={handleSalePrice}
-									>
-									</input>
-								</td>
-								<td>
-									<button className="button muted-button">Save</button>
-								</td>
-							</tr>
-						))}
+						{products.map((product, index) => {
+							if(product.node.id === props.idProduct) {
+								return (
+									<tr key={index} >
+									<td>
+										<input type="text"
+											name="productName"
+											value={product.node.name}
+											id={index}
+											onChange={handleName}
+										>
+										</input>
+									</td>
+									<td>
+										<input
+											type="text"
+											name="promotionalPrice"
+											value={product.node.promotionalPrice}
+											id={index}
+											onChange={handlePromotionalPrice}
+										>
+										</input>
+									</td>
+									<td>
+										<input
+											type="text"
+											name="productName"
+											value={product.node.salePrice}
+											id={index}
+											onChange={handleSalePrice}
+										>
+										</input>
+									</td>
+									<td>
+										<button className="button muted-button" onClick={handleSave}>Save</button>
+									</td>
+								</tr>
+								)
+							}
+						})
+						}
 					</tbody>
 					<SimpleModal />
 				</div>
