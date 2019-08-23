@@ -40,26 +40,31 @@ const ListProducts = (props) => {
   const { data, error, fetchMore } = useQuery(PRODUCTS)
   const [productInfo, handleProductInfo] = useState(false)
 
-const handleClick = () => {
-  productInfo == false ? handleProductInfo(true) : handleProductInfo(false)
-  console.log(productInfo)
+  const handleClick = () => {
+    productInfo === false ? handleProductInfo(true) : handleProductInfo(false)
+  }
+
+  const handleClose = () => {
+    handleProductInfo(false)
   }
 
   if (error) return <p>ERROR</p>
   return (
     <Fragment>
-      {data.skus && data.skus.edges.map((product, index) => (
-        <table>
-        <tr key={index} >
-          <td onClick={handleClick}>{product.node.name}</td>
-          <td>
-            <button className="button muted-button">Edit</button>
-            <button className="button muted-button">Delete</button>
-          </td>
-        </tr>
-        </table>
-      ))}
-      {productInfo && <ProductInfo />}
+      <table>
+        <tbody>
+          {data.skus && data.skus.edges.map((product, index) => (
+            <tr key={index} >
+              <td onClick={handleClick}>{product.node.name}</td>
+              <td>
+                <button className="button muted-button">Edit</button>
+                <button className="button muted-button">Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {productInfo && <ProductInfo productInfo={productInfo} handleClose={handleClose} />}
       <button onClick={() => {
         fetchMore({
           variables: {
