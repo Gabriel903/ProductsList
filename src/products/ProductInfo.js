@@ -5,6 +5,8 @@ import Modal from '@material-ui/core/Modal';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
+import SaveButton from './SaveButton'
+
 const PRODUCTS = gql`
       {
           skus(size: 5, sellerId:"5d1617f6e5f0c14f45d86532")
@@ -149,7 +151,8 @@ export default function SimpleModal(props) {
 										</input>
 									</td>
 									<td>
-										<button className="button muted-button" onClick={handleSave}>Save</button>
+										<SaveButton productName={product} />
+										<button className="button muted-button">Cancelar</button>
 									</td>
 								</tr>
 								)
