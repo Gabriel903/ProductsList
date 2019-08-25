@@ -42,7 +42,6 @@ export default function SaveButton(props) {
         });
     }
 
-    console.log("DATA", data)
     return (
         <button className="button muted-button"
             onClick={() => handleSave(props)}

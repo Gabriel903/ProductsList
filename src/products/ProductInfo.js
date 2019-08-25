@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
@@ -8,37 +8,36 @@ import gql from 'graphql-tag';
 import SaveButton from './SaveButton'
 
 const PRODUCTS = gql`
-      {
-          skus(size: 5, sellerId:"5d1617f6e5f0c14f45d86532")
-          {
-            edges
-            {
-              node{
-                id
-                ean
-                name
-                code
-                sellerId
-                status
-                quantity
-                salePrice
-                promotionalPrice
-                images {
-                  url
-                  type
-                  createdAt
-                  deletedAt
-                }
-              }
-            }
-            pageInfo {
-              startCursor
-              endCursor
-            }
-          }
-        }      
-      `
-
+{
+skus(size: 5, sellerId:"5d1617f6e5f0c14f45d86532")
+{
+edges
+{
+node{
+	id
+	ean
+	name
+	code
+	sellerId
+	status
+	quantity
+	salePrice
+	promotionalPrice
+	images {
+		url
+		type
+		createdAt
+		deletedAt
+	}
+}
+}
+pageInfo {
+startCursor
+endCursor
+}
+}
+}      
+`
 
 function rand() {
 	return Math.round(Math.random() * 20) - 10;
@@ -96,10 +95,6 @@ export default function SimpleModal(props) {
 		handleProducts(arr)
 	}
 
-	const handleSave = (e) => {
-		console.log("VOU SALVAR")
-	}
-
 	return (
 		<div>
 			<Modal
@@ -109,58 +104,62 @@ export default function SimpleModal(props) {
 				onClose={props.handleClose}
 			>
 				<div style={modalStyle} className={classes.paper}>
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Promotional Price</th>
-							<th>Sale Price</th>
-						</tr>
-					</thead>
-					<tbody>
-						{products.map((product, index) => {
-							if(product.node.id === props.idProduct) {
-								return (
-									<tr key={index} >
-									<td>
-										<input type="text"
-											name="productName"
-											value={product.node.name}
-											id={index}
-											onChange={handleName}
-										>
-										</input>
-									</td>
-									<td>
-										<input
-											type="text"
-											name="promotionalPrice"
-											value={product.node.promotionalPrice}
-											id={index}
-											onChange={handlePromotionalPrice}
-										>
-										</input>
-									</td>
-									<td>
-										<input
-											type="text"
-											name="productName"
-											value={product.node.salePrice}
-											id={index}
-											onChange={handleSalePrice}
-										>
-										</input>
-									</td>
-									<td>
-										<SaveButton productName={product} />
-										<button className="button muted-button">Cancelar</button>
-									</td>
+					<Fragment>
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Promotional Price</th>
+									<th>Sale Price</th>
 								</tr>
-								)
-							}
-						})
-						}
-					</tbody>
-					<SimpleModal />
+							</thead>
+							<tbody>
+								{products.map((product, index) => {
+									if (product.node.id === props.idProduct) {
+										return (
+											<tr key={index} >
+												<td>
+													<input type="text"
+														name="productName"
+														value={product.node.name}
+														id={index}
+														onChange={handleName}
+													>
+													</input>
+												</td>
+												<td>
+													<input
+														type="text"
+														name="promotionalPrice"
+														value={product.node.promotionalPrice}
+														id={index}
+														onChange={handlePromotionalPrice}
+													>
+													</input>
+												</td>
+												<td>
+													<input
+														type="text"
+														name="productName"
+														value={product.node.salePrice}
+														id={index}
+														onChange={handleSalePrice}
+													>
+													</input>
+												</td>
+												<td>
+													<SaveButton productName={product} />
+													<button className="button muted-button" onClose={props.onClose}>Cancelar</button>
+												</td>
+											</tr>
+										)
+									}
+								})
+								}
+							</tbody>
+							<SimpleModal />
+						</table>
+					</Fragment>
 				</div>
 			</Modal>
 		</div>

@@ -36,7 +36,7 @@ const PRODUCTS = gql`
         }      
       `
 
-const ListProducts = (props) => {
+const ListProducts = () => {
   const { data, error, fetchMore } = useQuery(PRODUCTS)
   const [productInfo, handleProductInfo] = useState(false)
   const [idProduct, actualIdProduct] = useState('')
@@ -52,29 +52,38 @@ const ListProducts = (props) => {
     handleProductInfo(false)
   }
 
+  const loadMore = () => {
+    
+  }
+
   if (error) return <p>ERROR</p>
   return (
     <Fragment>
       <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Promotional Price</th>
+            <th>Sale Price</th>
+            <th>Quantidade</th>
+          </tr>
+        </thead>
         <tbody>
           {data.skus && data.skus.edges.map((product, index) => (
             <tr key={index} >
-              <td onClick={handleClick} id={product.node.id}>{product.node.name}</td>
+              <td>{product.node.name}</td>
+              <td>{product.node.promotionalPrice}</td>
+              <td>{product.node.salePrice}</td>
+              <td>{product.node.quantity}</td>
               <td>
-                <button className="button muted-button">Edit</button>
-                <button className="button muted-button">Delete</button>
+                <button id={product.node.id} className="button muted-button" onClick={handleClick}>Edit</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {productInfo && <ProductInfo productInfo={productInfo} idProduct={idProduct} handleClose={handleClose} />}
-      <button onClick={() => {
-        fetchMore({
-          variables: {
-          }
-        })
-      }}>
+      {productInfo && <ProductInfo productInfo={productInfo} idProduct={idProduct} handleClose={handleClose} onClose={console.log("eba")} />}
+      <button onClick={loadMore}>
         Load More
           </button>
     </Fragment>
