@@ -149,7 +149,7 @@ export default function SimpleModal(props) {
 												</td>
 												<td>
 													<SaveButton productName={product} />
-													<button className="button muted-button" onClose={props.onClose}>Cancelar</button>
+													<button className="button muted-button" onClick={props.handleClose}>Cancelar</button>
 												</td>
 											</tr>
 										)

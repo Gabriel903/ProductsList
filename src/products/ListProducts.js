@@ -82,7 +82,7 @@ const ListProducts = () => {
           ))}
         </tbody>
       </table>
-      {productInfo && <ProductInfo productInfo={productInfo} idProduct={idProduct} handleClose={handleClose} onClose={console.log("eba")} />}
+      {productInfo && <ProductInfo productInfo={productInfo} idProduct={idProduct} handleClose={handleClose}/>}
       <button onClick={loadMore}>
         Load More
           </button>
