@@ -101,6 +101,10 @@ mutation updateSku {
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Dockerizado usado os seguintes comandos:
+	- docker build -t listproduct .
+	- docker run -it -p 8080:80 listproduct
+
 ## Available Scripts
 
 In the project directory, you can run:
