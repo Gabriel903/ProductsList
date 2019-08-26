@@ -1,3 +1,104 @@
+## Desafio CRUD com hooks
+
+Construir um CRUD em ReactJS 16.8 (hooks) com componentes de apresentação e containers consumindo as nossas APIs em GraphQL (preferência utilizando o Apolo).  Pode ser utilizado qualquer layout (CSS) para o projeto.
+
+1) Criar uma listagem de produtos com paginação, consumindo a query abaixo:
+
+URL: https://api.dev.nodis.com.br/sku_seller/v1/graphql
+
+Body
+{
+  skus(size: 5, sellerId:"5d1617f6e5f0c14f45d86532")
+  {
+    edges
+    {
+      node{
+        id
+        ean
+        name
+        code
+        sellerId
+        status
+        quantity
+        salePrice
+        promotionalPrice
+        images {
+          url
+          type
+          createdAt
+          deletedAt
+        }
+      }
+    }
+    pageInfo {
+      startCursor
+      endCursor
+    }
+  }
+}
+
+2)  Ao clicar no item da lista, exibir o detalhe em uma ficha com popup com 2 botões: Salvar e Cancelar.
+
+URL: https://api.dev.nodis.com.br/sku_seller/v1/graphql
+
+Body
+{
+  sku(id:"5d2cc6f654deaa8d4ef5d5a0"){
+    id
+    code
+    ean
+    name
+    description
+    quantity
+    salePrice
+    promotionalPrice
+    package {
+      height
+      width
+      depth
+      weight
+    }
+    category {
+      id
+      name
+    }
+    images {
+      url
+      type
+      createdAt
+      deletedAt
+    }
+  }
+}
+
+3) Na tela de detalhe do produto, deixar apenas os campos salePrice, promotionalPrice e name editável. Ao clicar no botão de salvar, usar o mutation abaixo para atualizar os dados:
+
+URL: https://api.dev.nodis.com.br/sku_seller/v1/graphql
+
+Body
+
+mutation updateSku {
+  updateSku(data: {
+    id: "5d2cc6f654deaa8d4ef5d5a0"
+    salePrice: 20
+    promotionalPrice: 19
+    name: "Kley Hertz"
+  }
+  ),
+  {
+    ok,
+    sku{
+      id
+    }
+    errors{
+      field
+      errors{
+        message
+      }
+    }
+  }
+}
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
