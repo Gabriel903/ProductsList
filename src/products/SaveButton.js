@@ -29,8 +29,10 @@ const UPDATE_PRODUCT = gql`
 
 export default function SaveButton(props) {
     const [updateProduct, { data }] = useMutation(UPDATE_PRODUCT)
-
     const handleSave = (props) => {
+        if (typeof (props.productName.node.salePrice) != 'number') {
+            return (<div>Erro campo preco invalido</div>)
+        }
         const product = props.productName.node
         updateProduct({
             variables: {
@@ -39,7 +41,7 @@ export default function SaveButton(props) {
                 promotionalPrice: product.promotionalPrice,
                 name: product.name
             }
-        });
+        })
     }
 
     return (
