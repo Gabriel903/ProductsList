@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function SimpleModal({data, ...props}) {
+export default function SimpleModal({ data, ...props }) {
 	useEffect(() => {
 		if (data && data.skus && data.skus.edges) {
 			handleProducts(data.skus.edges)
@@ -57,7 +57,7 @@ export default function SimpleModal({data, ...props}) {
 		arr[e.target.id].node = { ...products[e.target.id].node, salePrice: e.target.value }
 		handleProducts(arr)
 	}
-
+		
 	return (
 		<div>
 			<Modal
@@ -68,25 +68,16 @@ export default function SimpleModal({data, ...props}) {
 			>
 				<div style={modalStyle} className={classes.paper}>
 					<Fragment>
-						<table>
-							<thead>
-								<tr>
-									<th>Imagem</th>
-									<th>Name</th>
-									<th>Promotional Price</th>
-									<th>Sale Price</th>
-									<th>Quantidade</th>
-								</tr>
-							</thead>
-							<tbody>
 								{products.map((product, index) => {
 									if (product.node.id === props.idProduct) {
 										return (
-											<tr key={index} >
-												<td>
+											<div key={index} >
+												<div>
+													<label>Imagem</label>
 													<img src={product.node.images[0].url}></img>
-												</td>
-												<td>
+												</div>
+												<div>
+													<label>Name</label>
 													<input type="text"
 														name="productName"
 														value={product.node.name}
@@ -94,18 +85,20 @@ export default function SimpleModal({data, ...props}) {
 														onChange={handleName}
 													>
 													</input>
-												</td>
-												<td>
+												</div>
+												<div>
+													<label>Promotional Price</label>
 													<input
-														type="text"
+														type="number"
 														name="promotionalPrice"
 														value={product.node.promotionalPrice}
 														id={index}
 														onChange={handlePromotionalPrice}
 													>
 													</input>
-												</td>
-												<td>
+												</div>
+												<div>
+													<label>Sale Price</label>
 													<input
 														type="number"
 														name="productName"
@@ -114,19 +107,21 @@ export default function SimpleModal({data, ...props}) {
 														onChange={handleSalePrice}
 													>
 													</input>
-												</td>
-												<td>
+												</div>
+												<div>
+													<label>Quantidade</label>
+													{product.node.quantity}
+												</div>
+												<div>
 													<SaveButton productName={product} />
 													<button className="button muted-button" onClick={props.handleClose}>Cancelar</button>
-												</td>
-											</tr>
+												</div>
+											</div>
 										)
 									}
 								})
 								}
-							</tbody>
 							<SimpleModal />
-						</table>
 					</Fragment>
 				</div>
 			</Modal>
