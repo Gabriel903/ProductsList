@@ -2,42 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-
 import SaveButton from './SaveButton'
-
-const PRODUCTS = gql`
-{
-skus(size: 5, sellerId:"5d1617f6e5f0c14f45d86532")
-{
-edges
-{
-node{
-	id
-	ean
-	name
-	code
-	sellerId
-	status
-	quantity
-	salePrice
-	promotionalPrice
-	images {
-		url
-		type
-		createdAt
-		deletedAt
-	}
-}
-}
-pageInfo {
-startCursor
-endCursor
-}
-}
-}      
-`
 
 function rand() {
 	return Math.round(Math.random() * 20) - 10;
@@ -65,17 +30,15 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function SimpleModal(props) {
+export default function SimpleModal({data, ...props}) {
 	useEffect(() => {
-		if (data.skus && data.skus.edges) {
+		if (data && data.skus && data.skus.edges) {
 			handleProducts(data.skus.edges)
 		}
 	})
 	const classes = useStyles()
 	const [modalStyle] = React.useState(getModalStyle)
 	const [products, handleProducts] = useState([]);
-	const { data, error } = useQuery(PRODUCTS)
-	if (error) return <p>ERROR</p>
 
 	const handleName = (e) => {
 		const arr = [...products]
@@ -108,9 +71,11 @@ export default function SimpleModal(props) {
 						<table>
 							<thead>
 								<tr>
+									<th>Imagem</th>
 									<th>Name</th>
 									<th>Promotional Price</th>
 									<th>Sale Price</th>
+									<th>Quantidade</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -118,6 +83,9 @@ export default function SimpleModal(props) {
 									if (product.node.id === props.idProduct) {
 										return (
 											<tr key={index} >
+												<td>
+													<img src={product.node.images[0].url}></img>
+												</td>
 												<td>
 													<input type="text"
 														name="productName"
@@ -139,7 +107,7 @@ export default function SimpleModal(props) {
 												</td>
 												<td>
 													<input
-														type="text"
+														type="number"
 														name="productName"
 														value={product.node.salePrice}
 														id={index}
