@@ -86,7 +86,7 @@ const ListProducts = () => {
               <td>{product.node.salePrice}</td>
               <td>{product.node.quantity}</td>
               <td>
-                <button id={product.node.id} className="button muted-button" onClick={handleClick}>Edit</button>
+                <button id={product.node.id} onClick={handleClick}>Edit</button>
               </td>
             </tr>
           ))}

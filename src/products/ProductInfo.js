@@ -80,7 +80,7 @@ export default function SimpleModal({ data, ...props }) {
 													<label>Name</label>
 													<input type="text"
 														name="productName"
-														value={product.node.name}
+														value={(product.node.name)}
 														id={index}
 														onChange={handleName}
 													>
