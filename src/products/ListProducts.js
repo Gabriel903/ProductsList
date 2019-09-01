@@ -82,8 +82,8 @@ const ListProducts = () => {
           {data.skus && data.skus.edges.map((product, index) => (
             <tr key={index} >
               <td>{product.node.name}</td>
-              <td>{product.node.promotionalPrice}</td>
-              <td>{product.node.salePrice}</td>
+              <td>R$ {product.node.promotionalPrice}</td>
+              <td>R$ {product.node.salePrice}</td>
               <td>{product.node.quantity}</td>
               <td>
                 <button id={product.node.id} onClick={handleClick}>Edit</button>

@@ -57,7 +57,7 @@ export default function SimpleModal({ data, ...props }) {
 		arr[e.target.id].node = { ...products[e.target.id].node, salePrice: e.target.value }
 		handleProducts(arr)
 	}
-		
+			
 	return (
 		<div>
 			<Modal
